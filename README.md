@@ -2,7 +2,7 @@
 
 # FACT: Fidelity-Aware Construction of Articulated Twins
 
-[Kuixiang Shao](https://openreview.net/profile?id=~Kuixiang_Shao1) · [Chuansen Nie](https://openreview.net/profile?id=~Chuansen_Nie1) · [Yinuo Bai](https://github.com/otanaaa) · [Jiayuan Gu](https://jiayuan-gu.github.io/) · [Jingyi Yu](https://www.yu-jingyi.com/)
+[Kuixiang Shao](https://openreview.net/profile?id=~Kuixiang_Shao1) · [Chuansen Nie](https://openreview.net/profile?id=~Chuansen_Nie1) · [Yinuo Bai](https://scholar.google.com/citations?user=9VoenOYAAAAJ&hl=zh-CN&oi=ao) · [Jiayuan Gu](https://jiayuan-gu.github.io/) · [Jingyi Yu](https://www.yu-jingyi.com/)
 
 **ShanghaiTech University**
 
