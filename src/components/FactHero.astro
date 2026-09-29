@@ -1,10 +1,11 @@
 ---
+import ImageState from './ImageState.astro';
 import { Icon } from 'astro-icon/components';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const paperUrl = ''; // Add the arXiv URL when available.
 ---
 <header class="fact-hero">
-  <img class="wordmark" src={`${base}media/fact-logo.svg`} width="442" height="134" alt="FACT" fetchpriority="high" />
+  <ImageState class="wordmark-frame"><img class="wordmark" src={`${base}media/fact-logo.svg`} width="442" height="134" alt="FACT" fetchpriority="high" /></ImageState>
   <h1><span class="sr-only">FACT: </span>Fidelity-Aware Construction<br class="desktop-break" /> of Articulated Twins</h1>
   <div class="authors">
     <a href="https://openreview.net/profile?id=~Kuixiang_Shao1" target="_blank" rel="noopener noreferrer">Kuixiang Shao</a>

@@ -45,6 +45,7 @@ const prefix = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
     {thumbnail && <meta property="og:image" content={prefix + thumbnail} />}
 
 
+    <noscript><style>image-state .image-status{display:none!important}image-state img{opacity:1!important}</style></noscript>
     <title>{title}</title>
   </head>
   <body class="fact-site font-(family-name:--font-noto-sans)">

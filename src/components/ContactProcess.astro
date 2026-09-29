@@ -1,4 +1,5 @@
 ---
+import ImageState from './ImageState.astro';
 import FactTabs from './FactTabs.astro';
 import cases from '../data/contact-cases.json';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
@@ -19,8 +20,8 @@ const image = (object: string, step: string, view: string) => `${base}media/cont
           {stages.map((step, stageIndex) => <contact-stage class="contact-stage" data-object={object.name} data-prefix={`${base}media/contact-cases/${object.id}-`}>
             <h4><span>{String(stageIndex+1).padStart(2,'0')}</span>{isRepair ? step.label : ['Initial decomposition','Repair','Compress'][stageIndex]}</h4>
             <div class="contact-stage-metrics" aria-live="polite" aria-atomic="true"><strong data-hulls>{step.hulls ?? step.regions}</strong><span>{step.kind === 'partition' ? 'planned regions' : 'convex hulls'}</span><small>{step.kind === 'partition' ? 'Split plan · incomplete proxy' : <><b data-vertices>{step.vertices!.toLocaleString('en-US')}</b> vertices</>}</small></div>
-            <img class="contact-stage-full" data-full src={image(object.id,step.id,'full')} width="640" height="640" loading="lazy" alt={`${object.name}: ${step.label.toLowerCase()} ${step.kind === 'partition' ? 'source partition plan' : 'collision proxy'}`} />
-            <figure class="contact-handle-detail"><figcaption>Handle detail</figcaption><img data-handle src={image(object.id,step.id,'handle')} width="640" height="640" loading="lazy" alt={`${object.name}: handle close-up after ${step.label.toLowerCase()}`} /></figure>
+            <ImageState><img class="contact-stage-full" data-full src={image(object.id,step.id,'full')} width="640" height="640" loading="lazy" alt={`${object.name}: ${step.label.toLowerCase()} ${step.kind === 'partition' ? 'source partition plan' : 'collision proxy'}`} /></ImageState>
+            <figure class="contact-handle-detail"><figcaption>Handle detail</figcaption><ImageState><img data-handle src={image(object.id,step.id,'handle')} width="640" height="640" loading="lazy" alt={`${object.name}: handle close-up after ${step.label.toLowerCase()}`} /></ImageState></figure>
             {stageIndex === 2 && compression.length > 1 && <div class="contact-compression-steps"><span>Compression steps</span><div role="group" aria-label={`${object.name} compression steps`}>{compression.map((variant, index) => <button type="button" data-step={variant.id} data-hull-count={variant.hulls} data-vertex-count={variant.vertices} aria-pressed={variant.id === final.id ? 'true' : 'false'} aria-label={`Compression step ${index+1}: ${variant.hulls} convex hulls`}>{variant.hulls}</button>)}</div></div>}
           </contact-stage>)}
         </div>

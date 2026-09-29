@@ -1,4 +1,5 @@
 ---
+import ImageState from './ImageState.astro';
 import { Picture as AstroPicture } from "astro:assets";
 
 interface Props {
@@ -12,6 +13,7 @@ const { src, alt, priority = false, invertInDarkMode = false } = Astro.props;
 
 ---
 
+<ImageState>
 <AstroPicture
   class={`rounded-lg max-h-[calc(100svh-3rem)] max-w-full w-min mx-auto ${invertInDarkMode ? "dark:invert" : ""}`}
   src={src}
@@ -21,3 +23,5 @@ const { src, alt, priority = false, invertInDarkMode = false } = Astro.props;
   priority={priority}
   fit="contain"
 />
+
+</ImageState>

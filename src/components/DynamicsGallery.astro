@@ -1,4 +1,5 @@
 ---
+import ImageState from './ImageState.astro';
 import FactTabs from './FactTabs.astro';
 import objects from '../data/dynamics-comparisons.json';
 const base = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}media/dynamics/`;
@@ -16,7 +17,7 @@ const base = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}media/dynamics/`;
           <output data-time>0.00 s</output>
         </div>
         <div class="motion-plot" data-quantity="position" role="slider" tabindex="0" aria-label={`${object.name}: seek using the ${object.id==='drawer'?'displacement':'door angle'} curve`} aria-valuemin="0" aria-valuemax={object.duration} aria-valuenow="0" aria-valuetext="0.00 seconds">
-          <img src={`${base}${object.position}`} width="960" height="340" loading="lazy" alt={`${object.name}: ${object.id==='drawer'?'displacement':'door angle'} trajectories of real observations, FACT, and all six baselines`} />
+          <ImageState><img src={`${base}${object.position}`} width="960" height="340" loading="lazy" alt={`${object.name}: ${object.id==='drawer'?'displacement':'door angle'} trajectories of real observations, FACT, and all six baselines`} /></ImageState>
           <span class="motion-cursor" aria-hidden="true"></span>
         </div>
       </dynamics-comparison>

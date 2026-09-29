@@ -1,0 +1,65 @@
+---
+interface Props { class?: string; }
+const { class: className } = Astro.props;
+---
+<image-state class={className} data-state="loading" aria-busy="true">
+  <slot />
+  <div class="image-status" role="status">
+    <span class="image-loading-mark" aria-hidden="true"></span>
+    <span data-image-message>Loading image…</span>
+    <button type="button" data-image-retry hidden>Retry</button>
+  </div>
+</image-state>
+
+<script>
+  class ImageLoadState extends HTMLElement {
+    private cleanup?: () => void;
+    connectedCallback() {
+      if (this.cleanup) return;
+      const img = this.querySelector('img');
+      if (!img) return;
+      const events = new AbortController();
+      const retry = this.querySelector<HTMLButtonElement>('[data-image-retry]')!;
+      const message = this.querySelector<HTMLElement>('[data-image-message]')!;
+      const setState = (state: 'loading' | 'loaded' | 'error') => {
+        this.dataset.state = state;
+        this.setAttribute('aria-busy', String(state === 'loading'));
+        message.textContent = state === 'error' ? 'Image could not load.' : 'Loading image…';
+        retry.hidden = state !== 'error';
+        retry.setAttribute('aria-label', `Retry loading ${img.alt || 'image'}`);
+      };
+      const check = () => setState(img.complete ? (img.naturalWidth > 0 ? 'loaded' : 'error') : 'loading');
+      img.addEventListener('load', check, { signal: events.signal });
+      img.addEventListener('error', () => setState('error'), { signal: events.signal });
+      // Also cover images replaced by the contact compression controls.
+      const observer = new MutationObserver(check);
+      for (const candidate of [img, ...this.querySelectorAll('source')]) {
+        observer.observe(candidate, { attributes: true, attributeFilter: ['src', 'srcset'] });
+      }
+      retry.addEventListener('click', (event) => {
+        event.stopPropagation();
+        setState('loading');
+        img.loading = 'eager';
+        const stamp = String(Date.now());
+        const refresh = (value: string) => {
+          const url = new URL(value, document.baseURI);
+          url.searchParams.set('retry', stamp);
+          return url.href;
+        };
+        // Retry every candidate so responsive <picture> sources are covered too.
+        for (const candidate of [img, ...this.querySelectorAll('source')]) {
+          const srcset = candidate.getAttribute('srcset');
+          if (srcset) candidate.setAttribute('srcset', srcset.split(',').map(entry => {
+            const [url, ...descriptor] = entry.trim().split(/\s+/);
+            return [refresh(url), ...descriptor].join(' ');
+          }).join(', '));
+        }
+        img.src = refresh(img.getAttribute('src')!);
+      }, { signal: events.signal });
+      check();
+      this.cleanup = () => { events.abort(); observer.disconnect(); };
+    }
+    disconnectedCallback() { this.cleanup?.(); this.cleanup = undefined; }
+  }
+  if (!customElements.get('image-state')) customElements.define('image-state', ImageLoadState);
+</script>
