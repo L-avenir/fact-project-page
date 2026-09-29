@@ -5,7 +5,6 @@ import mdx from "@astrojs/mdx";
 
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import rehypeCitation from "rehype-citation";
 
 import react from "@astrojs/react";
 
@@ -20,16 +19,7 @@ export default defineConfig({
   },
   markdown: {
     remarkPlugins: [remarkMath],
-    rehypePlugins: [
-      rehypeKatex,
-      [
-        rehypeCitation,
-        {
-          bibliography: "bibliography.bib",
-          linkCitations: true,
-        },
-      ],
-    ],
+    rehypePlugins: [rehypeKatex],
   },
   integrations: [
     icon(),

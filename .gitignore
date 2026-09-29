@@ -1,27 +1,33 @@
-# build output
-dist/
+# Only website source, build configuration, and deliberate public assets belong here.
+/*
+!/.gitignore
+!/.prettierignore
+!/README.md
+!/astro.config.ts
+!/eslint.config.ts
+!/package.json
+!/package-lock.json
+!/prettier.config.ts
+!/tsconfig.json
+!/.github/
+!/src/
+!/public/
 
-# generated types
-.astro/
+/.github/*
+!/.github/workflows/
+/.github/workflows/*
+!/.github/workflows/astro.yml
 
-# dependencies
+/public/*
+!/public/favicon.svg
+!/public/media/
+# Tracked media remains versioned. Add new published media deliberately with git add -f.
+/public/media/**
+
+# Generated files, dependencies, credentials, and local research material.
 node_modules/
-
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# environment variables
-.env
-.env.production
-
-# macOS-specific files
+dist/
+.astro/
+.env*
+*.log
 .DS_Store
-
-# jetbrains setting folder
-.idea/
-
-# Original user film is preserved locally; public/media/FACT.mp4 is the served copy.
-/FACT.mp4
