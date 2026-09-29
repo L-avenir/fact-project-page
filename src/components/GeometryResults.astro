@@ -1,0 +1,121 @@
+---
+import framing from '../data/geometry-framing.json';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const objects = [
+  ['bedsidetable', 'Bedside table'],
+  ['cabinet_1', 'Cabinet'], ['drawer_kit_3', 'Drawer'], ['grand_piano', 'Piano'],
+  ['massage_gun', 'Massage gun'], ['motor', 'Motor'],
+  ['rolling_washer_5', 'Front-load washer'], ['washing_machine_2', 'Top-load washer'],
+  ['bakingchamber', 'Baking chamber'],
+];
+const frameStyle = (key: string) => {
+  const frame = framing[key as keyof typeof framing];
+  return `--image-width:${frame.width}%;--image-left:${frame.left}%;--image-top:${frame.top}%;background:${frame.background}`;
+};
+---
+<fact-carousel class="geometry-results" role="region" aria-roledescription="carousel" aria-label="FACT reconstruction from images">
+  <div class="reconstruction-controls">
+    <button type="button" data-previous aria-label="Previous object" aria-controls="reconstruction-slides">←</button>
+    <div class="reconstruction-status" aria-live="polite" aria-atomic="true"><strong data-name>{objects[0][1]}</strong><span data-count>01 / 09</span></div>
+    <button type="button" data-next aria-label="Next object" aria-controls="reconstruction-slides">→</button>
+  </div>
+  <div id="reconstruction-slides" class="reconstruction-slides">
+    {objects.map(([id, name], i) => (
+      <div class="reconstruction-slide" data-name={name} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${objects.length}: ${name}`} hidden={i !== 0} aria-hidden={i !== 0 ? 'true' : 'false'} inert={i !== 0}>
+        <figure class="reconstruction-input"><figcaption>Input image</figcaption><div class="reconstruction-frame" style={frameStyle(`${id}-input`)}><img src={`${base}media/image-reconstruction/${id}-input.png`} width="768" height="768" loading={i === 0 ? 'eager' : 'lazy'} alt={`${name}: input image`} draggable="false" /></div></figure>
+        <span class="reconstruction-arrow" aria-hidden="true">→</span>
+        <figure class="reconstruction-output"><figcaption>FACT reconstruction</figcaption><div class="reconstruction-frame" style={frameStyle(`${id}-fact`)}><img src={`${base}media/image-reconstruction/${id}-fact.png`} width="720" height="720" loading={i === 0 ? 'eager' : 'lazy'} alt={`${name}: FACT reconstruction from the input image`} draggable="false" /></div></figure>
+      </div>
+    ))}
+  </div>
+  <div class="reconstruction-picker" role="group" aria-label="Choose an object">
+    {objects.map(([, name], i) => <button type="button" data-index={i} aria-pressed={i === 0 ? 'true' : 'false'} aria-controls="reconstruction-slides">{name}</button>)}
+  </div>
+</fact-carousel>
+
+<script>
+  class FactCarousel extends HTMLElement {
+    private cleanup?: () => void;
+    connectedCallback() {
+      if (this.cleanup) return;
+      const events = new AbortController();
+      const listen = (target: EventTarget, type: string, handler: EventListener) => target.addEventListener(type, handler, { signal: events.signal });
+      const slides = [...this.querySelectorAll<HTMLElement>('.reconstruction-slide')];
+      const choices = [...this.querySelectorAll<HTMLButtonElement>('[data-index]')];
+      const status = this.querySelector<HTMLElement>('.reconstruction-status')!;
+      const name = status.querySelector<HTMLElement>('[data-name]')!;
+      const count = status.querySelector<HTMLElement>('[data-count]')!;
+      const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let paused = motion.matches;
+      let hovering = false;
+      let focused = false;
+      let visible = false;
+      let current = Math.max(0, slides.findIndex(slide => !slide.hidden));
+      let timer: number | undefined;
+      const stop = () => { window.clearTimeout(timer); timer = undefined; };
+      const schedule = () => {
+        stop();
+        const playing = !paused && !hovering && !focused && visible && !document.hidden;
+        status.setAttribute('aria-live', playing ? 'off' : 'polite');
+        if (playing) timer = window.setTimeout(() => show(current + 1), 5000);
+      };
+      const show = (index: number) => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => {
+          slide.hidden = i !== current;
+          slide.inert = i !== current;
+          slide.setAttribute('aria-hidden', String(i !== current));
+        });
+        choices.forEach((button, i) => button.setAttribute('aria-pressed', String(i === current)));
+        name.textContent = slides[current].dataset.name!;
+        count.textContent = `${String(current + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+        // Fetch the next pair before it enters the viewport.
+        slides[(current + 1) % slides.length].querySelectorAll('img').forEach(img => { img.loading = 'eager'; });
+        schedule();
+      };
+      listen(this.querySelector('[data-previous]')!, 'click', () => show(current - 1));
+      listen(this.querySelector('[data-next]')!, 'click', () => show(current + 1));
+      choices.forEach((button, i) => listen(button, 'click', () => show(i)));
+      listen(this, 'pointerenter', (event) => { if ((event as PointerEvent).pointerType !== 'touch') { hovering = true; schedule(); } });
+      listen(this, 'pointerleave', () => { hovering = false; schedule(); });
+      listen(this, 'focusin', () => { focused = true; schedule(); });
+      listen(this, 'focusout', (event) => { focused = this.contains((event as FocusEvent).relatedTarget as Node | null); schedule(); });
+      listen(document, 'visibilitychange', schedule);
+      listen(motion, 'change', () => { paused = motion.matches; schedule(); });
+      listen(this, 'keydown', (raw) => {
+        const event = raw as KeyboardEvent;
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        show(event.key === 'Home' ? 0 : event.key === 'End' ? slides.length - 1 : current + (event.key === 'ArrowRight' ? 1 : -1));
+      });
+      const viewport = this.querySelector<HTMLElement>('.reconstruction-slides')!;
+      let start: { x: number; y: number } | null = null;
+      listen(viewport, 'pointerdown', (raw) => {
+        const event = raw as PointerEvent;
+        if (event.pointerType === 'mouse') return;
+        stop();
+        start = { x: event.clientX, y: event.clientY };
+      });
+      listen(viewport, 'pointercancel', () => { start = null; schedule(); });
+      listen(viewport, 'pointerup', (raw) => {
+        const event = raw as PointerEvent;
+        if (!start) return;
+        const dx = event.clientX - start.x;
+        const dy = event.clientY - start.y;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(current + (dx < 0 ? 1 : -1));
+        else schedule();
+        start = null;
+      });
+      const observer = new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting && entry.intersectionRatio >= .25;
+        schedule();
+      }, { threshold: [0, .25] });
+      observer.observe(this);
+      show(current);
+      this.cleanup = () => { stop(); observer.disconnect(); events.abort(); };
+    }
+    disconnectedCallback() { this.cleanup?.(); this.cleanup = undefined; }
+  }
+  if (!customElements.get('fact-carousel')) customElements.define('fact-carousel', FactCarousel);
+</script>

@@ -1,9 +1,10 @@
 ---
-import { Font } from "astro:assets";
+import "@fontsource-variable/noto-sans/wght.css";
 
 import Table from "../components/Table.astro";
 
 import "../styles/global.css";
+import "../styles/fact.css";
 import "katex/dist/katex-swap.css";
 
 import { Content, frontmatter } from "../paper.mdx";
@@ -43,17 +44,12 @@ const prefix = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
     <meta property="og:type" content="website" />
     {thumbnail && <meta property="og:image" content={prefix + thumbnail} />}
 
-    <Font
-      cssVariable="--font-noto-sans"
-      preload={[{ subset: "latin", style: "normal" }]}
-    />
 
     <title>{title}</title>
   </head>
-  <body
-    class="prose prose-lg prose-zinc dark:prose-invert prose-a:text-blue-600 prose-a:hover:text-blue-900 prose-a:dark:text-blue-200 prose-a:dark:hover:text-blue-100 prose-a:underline prose-a:decoration-dashed prose-a:underline-offset-4 prose-a:hover:decoration-solid prose-a:font-normal prose-code:bg-zinc-200 prose-code:dark:bg-zinc-800 prose-code:text-zinc-800 prose-code:dark:text-zinc-200 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-medium prose-code:before:content-none prose-code:after:content-none max-w-none pt-16 pb-6 font-(family-name:--font-noto-sans)"
-  >
-    <main>
+  <body class="fact-site font-(family-name:--font-noto-sans)">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <main id="main-content">
       <Content components={{ table: Table }} />
     </main>
     <footer class="mx-auto max-w-[50rem] px-6 text-center">

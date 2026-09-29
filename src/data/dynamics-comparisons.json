@@ -1,0 +1,212 @@
+[
+  {
+    "id": "oven",
+    "name": "Oven",
+    "clip": "M02",
+    "duration": 1.3009601428247122,
+    "speed": 0.5,
+    "width": 1920,
+    "height": 940,
+    "video": "oven-all-methods.mp4",
+    "poster": "oven-all-methods.jpg",
+    "position": "oven-all-methods-position.svg",
+    "methods": [
+      {
+        "id": "real",
+        "label": "Real video",
+        "series": "Real reference",
+        "color": "#193845",
+        "style": "-"
+      },
+      {
+        "id": "fact",
+        "label": "FACT (Ours)",
+        "series": "FACT (Ours)",
+        "color": "#d82020",
+        "style": "-"
+      },
+      {
+        "id": "gemini38flash",
+        "label": "Gemini-3.8-Flash",
+        "series": "Gemini 3.8 Flash",
+        "color": "#2878b5",
+        "style": "-."
+      },
+      {
+        "id": "gpt6astra",
+        "label": "GPT-6 Astra",
+        "series": "GPT-6 Astra",
+        "color": "#ce3970",
+        "style": "--"
+      },
+      {
+        "id": "gpt56sol",
+        "label": "GPT-5.6 Sol",
+        "series": "GPT-5.6 Sol",
+        "color": "#9a7508",
+        "style": "-"
+      },
+      {
+        "id": "qwen38max",
+        "label": "Qwen3.8-Max",
+        "series": "Qwen 3.8 Max",
+        "color": "#7b55aa",
+        "style": ":"
+      },
+      {
+        "id": "kimik3",
+        "label": "Kimi-K3",
+        "series": "Kimi K3",
+        "color": "#189878",
+        "style": "-"
+      },
+      {
+        "id": "physx",
+        "label": "PhysX-Anything",
+        "series": "PhysX-Anything",
+        "color": "#dc7432",
+        "style": "--"
+      }
+    ]
+  },
+  {
+    "id": "fridge",
+    "name": "Fridge",
+    "clip": "release_01",
+    "duration": 3.73184,
+    "speed": 1,
+    "width": 1920,
+    "height": 832,
+    "video": "fridge-all-methods.mp4",
+    "poster": "fridge-all-methods.jpg",
+    "position": "fridge-all-methods-position.svg",
+    "methods": [
+      {
+        "id": "real",
+        "label": "Real video",
+        "series": "Real reference",
+        "color": "#193845",
+        "style": "-"
+      },
+      {
+        "id": "fact",
+        "label": "FACT (Ours)",
+        "series": "FACT (Ours)",
+        "color": "#d82020",
+        "style": "-"
+      },
+      {
+        "id": "gemini38flash",
+        "label": "Gemini-3.8-Flash",
+        "series": "Gemini 3.8 Flash",
+        "color": "#2878b5",
+        "style": "-."
+      },
+      {
+        "id": "gpt6astra",
+        "label": "GPT-6 Astra",
+        "series": "GPT-6 Astra",
+        "color": "#ce3970",
+        "style": "--"
+      },
+      {
+        "id": "gpt56sol",
+        "label": "GPT-5.6 Sol",
+        "series": "GPT-5.6 Sol",
+        "color": "#9a7508",
+        "style": "-"
+      },
+      {
+        "id": "qwen38max",
+        "label": "Qwen3.8-Max",
+        "series": "Qwen 3.8 Max",
+        "color": "#7b55aa",
+        "style": ":"
+      },
+      {
+        "id": "kimik3",
+        "label": "Kimi-K3",
+        "series": "Kimi K3",
+        "color": "#189878",
+        "style": "-"
+      },
+      {
+        "id": "physx",
+        "label": "PhysX-Anything",
+        "series": "PhysX-Anything",
+        "color": "#dc7432",
+        "style": "--"
+      }
+    ]
+  },
+  {
+    "id": "drawer",
+    "name": "Drawer",
+    "clip": "clip_01",
+    "duration": 0.3335823999753501,
+    "speed": 0.25,
+    "width": 1920,
+    "height": 916,
+    "video": "drawer-all-methods.mp4",
+    "poster": "drawer-all-methods.jpg",
+    "position": "drawer-all-methods-position.svg",
+    "methods": [
+      {
+        "id": "real",
+        "label": "Real video",
+        "series": "Real reference",
+        "color": "#193845",
+        "style": "-"
+      },
+      {
+        "id": "fact",
+        "label": "FACT (Ours)",
+        "series": "FACT (Ours)",
+        "color": "#d82020",
+        "style": "-"
+      },
+      {
+        "id": "gemini38flash",
+        "label": "Gemini-3.8-Flash",
+        "series": "Gemini 3.8 Flash",
+        "color": "#2878b5",
+        "style": "-."
+      },
+      {
+        "id": "gpt6astra",
+        "label": "GPT-6 Astra",
+        "series": "GPT-6 Astra",
+        "color": "#ce3970",
+        "style": "--"
+      },
+      {
+        "id": "gpt56sol",
+        "label": "GPT-5.6 Sol",
+        "series": "GPT-5.6 Sol",
+        "color": "#9a7508",
+        "style": "-"
+      },
+      {
+        "id": "qwen38max",
+        "label": "Qwen3.8-Max",
+        "series": "Qwen 3.8 Max",
+        "color": "#7b55aa",
+        "style": ":"
+      },
+      {
+        "id": "kimik3",
+        "label": "Kimi-K3",
+        "series": "Kimi K3",
+        "color": "#189878",
+        "style": "-"
+      },
+      {
+        "id": "physx",
+        "label": "PhysX-Anything",
+        "series": "PhysX-Anything",
+        "color": "#dc7432",
+        "style": "--"
+      }
+    ]
+  }
+]

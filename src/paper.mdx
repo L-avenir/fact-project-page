@@ -1,218 +1,115 @@
 ---
-# This title is used for the browser tab and the link-preview card (see the
-# "description" and "thumbnail" keys below). The title displayed at the top of
-# the page is set separately, on the <Header> component in the body.
-title: Academic Project Page Template
-
-# The color theme of the page. Defaults to "device" (the preference set in the user's brower or operating system). Setting this to "light" or "dark" will override the user's preference. This is useful if your figures only look good in one theme.
-theme: device
-
-# This is the icon that appears in the user's browser tab. To customize, change the favicon.svg file in /public/, or add your own file to /public/ and change the filename here.
+title: "FACT: Fidelity-Aware Construction of Articulated Twins"
+description: "An agentic framework for constructing articulated twins with geometry, contact, and dynamic fidelity."
+theme: light
 favicon: favicon.svg
-
-# These keys are optional. If a link to your project page is in a Google search result, text message, or social media post, it will often appear as a "link preview card" based on its title, description, favicon, and thumbnail. After you publish your page, you can double check that these previews look right using [this tool](https://linkpreview.xyz/)
-description: Simple project page template for your research paper, built with Astro and Tailwind
-thumbnail: screenshot-light.png
 ---
 
-import Header from "./components/Header.astro";
-import Video from "./components/Video.astro";
-import HighlightedSection from "./components/HighlightedSection.astro";
-import SmallCaps from "./components/SmallCaps.astro";
-import Figure from "./components/Figure.astro";
-import Picture from "./components/Picture.astro";
-import ModelViewer from "./components/ModelViewer.astro"
-import TwoColumns from "./components/TwoColumns.astro";
-import YouTubeVideo from "./components/YouTubeVideo.astro";
-import Carousel from "./components/Carousel.astro";
-import CarouselSlide from "./components/CarouselSlide.astro";
-import Wide from "./components/Wide.astro";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/starwind/tabs";
-import { Comparison } from "./components/Comparison.tsx";
+import FactHero from './components/FactHero.astro';
+import Picture from './components/Picture.astro';
+import Figure from './components/Figure.astro';
+import Video from './components/Video.astro';
+import Wide from './components/Wide.astro';
+import GeometryProcess from './components/GeometryProcess.astro';
+import GeometryResults from './components/GeometryResults.astro';
+import GeometryTable from './components/GeometryTable.astro';
+import ContactProcess from './components/ContactProcess.astro';
+import DynamicsGallery from './components/DynamicsGallery.astro';
+import ResultsTable from './components/ResultsTable.astro';
+import teaser from './assets/fact/teaser.png';
+import method from './assets/fact/method.png';
+import contact from './assets/fact/fig5.png';
 
-import outside from "./assets/outside.mp4";
-import dogsDiffc from "./assets/dogs-diffc.png"
-import dogsTrue from "./assets/dogs-true.png"
-import dogsMsillm from "@/assets/dogs-msillm.jpg"
+export const media = (file) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}media/${file}`;
 
-<Header
-  title="Academic Project Page Template"
-  conference="Conference Name"
-  authors={[
-    {
-      name: "Roman Hauksson",
-      url: "https://roman.technology",
-      institution: "University of Texas at Dallas",
-      notes: ["*", "†"],
-    },
-    { name: "Author Two", institution: "Institution Two", notes: ["*", "†"] },
-    { name: "Author Three", institution: "Institution Three", notes: ["*"] },
-    { name: "Author Four", institution: "Institution Four" },
-  ]}
-  notes={[
-    { symbol: "*", text: "author note one" },
-    { symbol: "†", text: "author note two" },
-  ]}
-  links={[
-    { name: "Paper", url: "https://github.com/RomanHauksson/academic-project-astro-template", icon: "ri:file-pdf-2-line" },
-    { name: "Code", url: "https://github.com/RomanHauksson/academic-project-astro-template", icon: "ri:github-line" },
-    { name: "arXiv", url: "https://github.com/RomanHauksson/academic-project-astro-template", icon: "academicons:arxiv" },
-    { name: "Slides", url: "https://github.com/RomanHauksson/academic-project-astro-template", icon: "ri:slideshow-2-line" },
-  ]}
->
-  {/*
-    Optionally place a cover image or video behind the header. Import the
-    asset (from src/assets/, so images are optimized) and pass it through the
-    "background" slot using the Picture or Video component:
+<FactHero />
 
-      <Picture slot="background" src={cover} alt="" />
-      <Video slot="background" src={outside} controls={false} />
-  */}
-  <Picture slot="background" src={dogsTrue} alt="" priority />
-</Header>
+<Wide><div className="teaser-figure"><Picture src={teaser} alt="FACT constructs articulated twins from object images and motion video through geometry reconstruction, contact refinement, and dynamics calibration." priority /></div></Wide>
 
-<HighlightedSection>
+<nav className="stage-nav" aria-label="Explore the three stages">
+  <a href="#geometry"><span>01</span> Geometry</a>
+  <a href="#contact"><span>02</span> Contact</a>
+  <a href="#dynamics"><span>03</span> Dynamics</a>
+</nav>
 
-## Abstract
+<section id="overview-video" className="overview-section">
+  <div className="section-intro"><span className="eyebrow">See FACT in action</span><h2>One framework. Three kinds of fidelity.</h2></div>
+  <Wide><Video src={media('FACT.mp4')} poster={media('overview-title-poster.jpg')} autoplay={false} muted={false} loop={false} preload="none" aria-label="FACT overview video" /></Wide>
+</section>
 
-This is a template you can use to create a professional-looking, accessible, and performant project page for your research paper. [See the code for the template and instructions on how to use it yourself on GitHub](https://github.com/RomanHauksson/academic-project-astro-template). It's made with the [Astro web framework](https://astro.build/) and styled with [Tailwind](https://tailwindcss.com/). You write the content in [MDX](https://mdxjs.com/), which enables markdown formatting like **bold**, _italics_, and ~strikethrough~, as well as custom components like <SmallCaps>small caps.</SmallCaps>
+<section className="abstract-section" id="abstract">
+<h2>Abstract</h2>
 
-</HighlightedSection>
+Visually plausible articulated assets may still fail during contact interactions or exhibit inaccurate motion. We present **FACT** (Fidelity-Aware Construction of Articulated Twins), an agentic framework that progressively constructs articulated twins to improve geometry, contact, and dynamic fidelity. The agent drives an evidence–diagnosis–revision loop on a shared editable representation, selecting measurements and model edits using quantitative feedback, while numerical tools execute and validate the updates. It reconstructs editable articulated geometry from images through feature planning, targeted measurements, and diagnostic refinement. On this reference, it repairs collision proxies through task-aware local repartitioning before fidelity-constrained compression. Finally, it constructs response models from passive-response videos, using simulation residuals to guide model revision and constrained physical parameter fitting. Experiments show that FACT improves geometric reconstruction over baselines, enables more reliable interaction with simpler collision proxies, and better reproduces held-out physical responses than direct parameter inference.
 
-## Visuals
+</section>
 
-### Image
+<section id="method" className="method-section">
+<div className="section-intro"><span className="eyebrow">How it works</span><h2>Gather evidence. Diagnose errors. Revise the model.</h2></div>
 
-Use the `Picture` component to display images. If you have a figure in PDF format, you can pass in its path as the `src` prop and it will be converted into a web-friendly image automatically.
+FACT progressively grounds a shared articulated representation: part geometry, a kinematic graph, collision proxies, and physical parameters. At each stage, the agent selects measurements and model revisions; numerical tools execute the updates and return quantitative feedback.
 
-<Picture src={dogsDiffc} alt="Photo of two running dogs, lossily compressed using the DiffC algorithm" />
+<Wide><Figure><Picture slot="figure" src={method} alt="FACT method: feature planning and measurement, task-aware collision refinement, and response-model construction and fitting, each connected by a diagnosis and revision loop." /><Fragment slot="caption">A shared editable representation connects geometric reconstruction, contact refinement, and dynamic calibration.</Fragment></Figure></Wide>
+</section>
 
-### Video
+<section id="geometry" className="fidelity-section geometry-section">
+<div className="section-intro"><span className="stage-label geometry-text">01 / Geometry fidelity</span><h2>Plan the features.<br />Measure the geometry.</h2></div>
 
-<Video src={outside} />
+The agent plans parametric features and selects measurements to constrain their dimensions and placement. Local geometric and visual diagnostics trace discrepancies back to the responsible feature, measurement, or modeling decision.
 
-### Wide visual
+<Wide><GeometryProcess /></Wide>
 
-I constrained the maximum width of the text column to make sure it's readable even when the screen is wide. But images and other visuals should "break out" and take up more horizontal space: for this, try wrapping them in the `Wide` component.
+<div className="subsection-heading"><span className="eyebrow">From images to articulated twins</span><h3>Recovering local structure and dimensions</h3></div>
 
-<Wide>
-  <Picture src={dogsDiffc} alt="Photo of two running dogs, lossily compressed using the DiffC algorithm" />
-</Wide>
+<Wide><GeometryResults /></Wide>
 
-### Figure with caption
+Both image-based variants of FACT outperform Codex and Articraft, while improving Chamfer distance and surface F-scores over their upstream meshes. With oracle inputs, FACT leads all six geometry metrics and reduces Chamfer distance by **83.8%** relative to Codex.
 
-Wrap a visual in a `Figure` component to add a caption.
+<Wide><GeometryTable /></Wide>
+</section>
 
-<Figure>
-  <Picture slot="figure" src={dogsDiffc} alt="Photo of two running dogs, lossily compressed using the DiffC algorithm" />
-  <Fragment slot="caption">A photo of two dogs running side-by-side in shallow water, lossily compressed using the [DiffC algorithm](https://jeremyiv.github.io/diffc-project-page/).</Fragment>
-</Figure>
+<section id="contact" className="fidelity-section contact-section-main">
+<div className="section-intro"><span className="stage-label contact-text">02 / Contact fidelity</span><h2>Preserve the space<br />that interaction needs.</h2></div>
 
-### Comparison slider
+Accurate shape alone does not ensure reliable interaction. FACT uses free-space and motion diagnostics to repair local collision partitions, then compresses the proxies under fidelity constraints.
 
-Use the `Comparison` component to compare two visuals with an interactive slider.
+<Wide><ContactProcess /></Wide>
 
-<Comparison client:idle >
-  <Picture slot="itemOne" src={dogsDiffc} alt="Photo of two running dogs, lossily compressed using the DiffC algorithm" />
-  <Picture slot="itemTwo" src={dogsTrue} alt="True photo of two dogs running side-by-side in shallow water" />
-</Comparison>
+<div className="subsection-heading"><h3>From collision proxies to reliable interaction</h3></div>
+<Wide><Video src={media('contact-fact.mp4')} poster={media('contact-fact-poster.jpg')} autoplay={false} preload="none" aria-label="Default CoACD and FACT collision proxies compared during drawer closing and handle grasping" /></Wide>
 
-### Tab panels
+<Wide><Figure><Picture slot="figure" src={contact} alt="Contact comparisons for bedside table, wardrobe, and massage gun. FACT preserves handle openings and removes illustrated proxy-induced intersections." /><Fragment slot="caption">Task-aware local edits preserve interaction-critical free space and remove proxy-induced intersections.</Fragment></Figure></Wide>
 
-Tab panels are a great way to display a labeled collection of related visuals without taking up too much space.
+FACT achieves **99.47%** interaction success, compared with 42.28% for DiagSearch, with **29.7% fewer hulls** and **36.5% lower physics-step time**.
 
-<Tabs defaultValue="true">
-  <TabsList>
-    <TabsTrigger value="true">Ground truth</TabsTrigger>
-    <TabsTrigger value="diffc">DiffC (Flux-dev)</TabsTrigger>
-    <TabsTrigger value="msillm">MS-ILLM</TabsTrigger>
-  </TabsList>
-  <TabsContent value="true">
-    <Picture
-      src={dogsTrue}
-      alt="True photo of two dogs running side-by-side in shallow water"
-    />
-  </TabsContent>
-  <TabsContent value="diffc">
-    <Picture
-      src={dogsDiffc}
-      alt="Photo of two running dogs, lossily compressed using the DiffC algorithm"
-    />
-  </TabsContent>
-  <TabsContent value="msillm">
-    <Picture
-      src={dogsMsillm}
-      alt="Photo of two running dogs, lossily compressed using MS-ILLM"
-    />
-  </TabsContent>
-</Tabs>
+<Wide><ResultsTable label="Contact fidelity and proxy complexity" headers={['Method','IoU (%) ↑','SCR (%) ↓','TFSO (%) ↓','ISR (%) ↑','Step time (ms) ↓','Hulls ↓']} rows={[
+['Body','54.17','83.18','42.82','15.79','0.1035','76.1'],
+['Part','68.75','79.52','21.35','28.42','0.1013','223.6'],
+['Component','72.37','72.48','17.85','33.68','0.0956','306.2'],
+['DiagSearch','74.50','59.78','16.15','42.28','0.0988','326.0'],
+['FACT','79.43','0.00','6.79','99.47','0.0627','229.2']
+]} /></Wide>
+</section>
 
-### Carousel
+<section id="dynamics" className="fidelity-section dynamics-section">
+<div className="section-intro"><span className="stage-label dynamics-text">03 / Dynamic fidelity</span><h2>Reproduce how real objects move.</h2></div>
 
-A carousel is another useful pattern for a collection of visuals that don't necessarily have meaningful labels.
+From passive-response videos, the agent constructs response models and uses simulation residuals to guide model revision and constrained physical parameter fitting. The reconstructed geometry, joints, and collision proxies provide a fixed basis for calibration.
 
-<Carousel>
-  <CarouselSlide>
-    <Picture src={dogsTrue} alt="True photo of two dogs running side-by-side in shallow water" />
-  </CarouselSlide>
-  <CarouselSlide>
-    <Picture src={dogsDiffc} alt="Photo of two running dogs, lossily compressed using the DiffC algorithm" />
-  </CarouselSlide>
-  <CarouselSlide>
-    <Picture
-      src={dogsMsillm}
-      alt="Photo of two running dogs, lossily compressed using MS-ILLM"
-    />
-  </CarouselSlide>
-</Carousel>
+<Wide><DynamicsGallery /></Wide>
 
-## Two columns
+<ResultsTable label="Dynamic prediction" headers={['Method','VRMSE ↓','TMSE ↓','OTR@10% ↓']} rows={[
+['GPT-5.6 Sol','0.5181','0.6763','40.52'],
+['GPT-6 Astra','0.5853','1.1535','31.73'],
+['Gemini-3.8-Flash','0.5566','0.1711','27.05'],
+['Qwen3.8-Max','0.6101','0.4236','36.49'],
+['Kimi-K3','0.8541','0.6995','46.97'],
+['PhysX-Anything','0.7165','0.7549','32.01'],
+['FACT','0.3786','0.0252','11.04']
+]} />
+</section>
 
-Use the two columns component to display two columns of content. In this example, the first column contains a YouTube video embed and the second column contains an interactive 3D model viewer. By default, they display side by side, but if the screen is narrow enough (for example, on mobile), they're arranged vertically.
-
-<TwoColumns>
-  <YouTubeVideo slot="left" videoId="wjZofJX0v4M" />
-  <ModelViewer slot="right" src="/BoxVertexColors.glb" alt="A cube colored with a rainbow gradient" />
-</TwoColumns>
-
-## $\LaTeX$
-
-You can also add $\LaTeX$ formulas, rendered during the build process using [$\KaTeX$](https://katex.org/) so they're quick to load for visitors of your project page. You can write them inline, like this: $a^2 + b^2 = c^2$. Or, you can write them as a block:
-
-$$
-\int_a^b f(x) dx
-$$
-
-## Citation
-
-If you copy your bibliography into `./bibliography.bib`, you can cite papers using their BibTeX keys, and they'll be automatically formatted and included in the bibliography section at the end. For example: [@vaswani2017attention]. Note that these citations are distinct from footnotes[^mynote], which show up in a separate section if you use them.
-
-[^mynote]: On the web, they should really be called "endnotes", since each page constitutes a full document.
-
-## Table
-
-Add simple tables using [GitHub Flavored Markdown syntax](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables):
-
-| Model | Accuracy | F1 score | Training time (hours) |
-| :--- | :---: | :---: | :---: |
-| BERT-base | 0.89 | 0.87 | 4.5 |
-| RoBERTa-large | 0.92 | 0.91 | 7.2 |
-| DistilBERT | 0.86 | 0.84 | 2.1 |
-| XLNet | 0.90 | 0.89 | 6.8 |
-
-## BibTeX citation
-
-Displaying the BibTeX entry for your paper in a code block makes it easy to copy and paste.
-
-```bibtex
-@misc{roman2024academic,
-  author = "{Roman Hauksson}",
-  title = "Academic Project Page Template",
-  year = "2024",
-  howpublished = "\url{https://research-template.roman.technology}",
-}
-```
-
-## Bibliography
-
-[^ref]
+<section id="citation" className="citation-section" aria-labelledby="bibtex-heading">
+<h2 id="bibtex-heading">BibTeX</h2>
+<pre className="bibtex-placeholder"><code>% BibTeX entry will be added soon.</code></pre>
+</section>

@@ -1,0 +1,51 @@
+---
+import FactTabs from './FactTabs.astro';
+import cases from '../data/contact-cases.json';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const image = (object: string, step: string, view: string) => `${base}media/contact-cases/${object}-${step}-${view}.png`;
+---
+<div class="process-block contact-process contact-cases">
+  <div class="process-intro"><span class="eyebrow">Inside the refinement</span><h3>Repair first. Then compress.</h3><p>Handle detail. Fewer convex hulls.</p></div>
+  <FactTabs id="contact-cases" label="Contact refinement examples" labels={cases.map(object=>object.name)}>
+    {cases.map((object, i) => {
+      const initial = object.steps[0];
+      const final = object.steps[object.steps.length - 1];
+      const isRepair = object.mode === 'repair';
+      const stages = isRepair ? object.steps : [initial, object.steps[1], final];
+      const compression = isRepair ? [] : object.steps.slice(2);
+      return <div id={`contact-cases-panel-${i}`} role="tabpanel" aria-labelledby={`contact-cases-tab-${i}`} tabindex="0" hidden={i !== 0} class="tab-panel contact-case-panel">
+        <div class="contact-case-summary"><span><strong>{initial.hulls} → {final.hulls}</strong> convex hulls</span><span class="contact-reduction">−{((1-final.hulls!/initial.hulls!)*100).toFixed(1)}%</span></div>
+        <div class="contact-stage-grid">
+          {stages.map((step, stageIndex) => <contact-stage class="contact-stage" data-object={object.name} data-prefix={`${base}media/contact-cases/${object.id}-`}>
+            <h4><span>{String(stageIndex+1).padStart(2,'0')}</span>{isRepair ? step.label : ['Initial decomposition','Repair','Compress'][stageIndex]}</h4>
+            <div class="contact-stage-metrics" aria-live="polite" aria-atomic="true"><strong data-hulls>{step.hulls ?? step.regions}</strong><span>{step.kind === 'partition' ? 'planned regions' : 'convex hulls'}</span><small>{step.kind === 'partition' ? 'Split plan · incomplete proxy' : <><b data-vertices>{step.vertices!.toLocaleString('en-US')}</b> vertices</>}</small></div>
+            <img class="contact-stage-full" data-full src={image(object.id,step.id,'full')} width="640" height="640" loading="lazy" alt={`${object.name}: ${step.label.toLowerCase()} ${step.kind === 'partition' ? 'source partition plan' : 'collision proxy'}`} />
+            <figure class="contact-handle-detail"><figcaption>Handle detail</figcaption><img data-handle src={image(object.id,step.id,'handle')} width="640" height="640" loading="lazy" alt={`${object.name}: handle close-up after ${step.label.toLowerCase()}`} /></figure>
+            {stageIndex === 2 && compression.length > 1 && <div class="contact-compression-steps"><span>Compression steps</span><div role="group" aria-label={`${object.name} compression steps`}>{compression.map((variant, index) => <button type="button" data-step={variant.id} data-hull-count={variant.hulls} data-vertex-count={variant.vertices} aria-pressed={variant.id === final.id ? 'true' : 'false'} aria-label={`Compression step ${index+1}: ${variant.hulls} convex hulls`}>{variant.hulls}</button>)}</div></div>}
+          </contact-stage>)}
+        </div>
+      </div>;
+    })}
+  </FactTabs>
+</div>
+<script>
+  class ContactStage extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return;
+      this.dataset.ready = 'true';
+      const buttons = [...this.querySelectorAll<HTMLButtonElement>('[data-step]')];
+      buttons.forEach(button => button.addEventListener('click', () => {
+        buttons.forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
+        this.querySelector<HTMLElement>('[data-hulls]')!.textContent = button.dataset.hullCount!;
+        this.querySelector<HTMLElement>('[data-vertices]')!.textContent = Number(button.dataset.vertexCount).toLocaleString('en-US');
+        const stepNumber = buttons.indexOf(button) + 1;
+        for (const view of ['full', 'handle']) {
+          const img = this.querySelector<HTMLImageElement>(`[data-${view}]`)!;
+          img.src = `${this.dataset.prefix}${button.dataset.step}-${view}.png`;
+          img.alt = `${this.dataset.object}: ${view === 'handle' ? 'handle close-up' : 'collision proxy'} after compression step ${stepNumber}`;
+        }
+      }));
+    }
+  }
+  if (!customElements.get('contact-stage')) customElements.define('contact-stage', ContactStage);
+</script>

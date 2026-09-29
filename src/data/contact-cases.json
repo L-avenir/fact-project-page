@@ -1,0 +1,96 @@
+[
+  {
+    "id": "wardrobe",
+    "name": "Wardrobe",
+    "mode": "compress",
+    "steps": [
+      {
+        "id": "initial",
+        "label": "Initial decomposition",
+        "kind": "proxy",
+        "hulls": 230,
+        "vertices": 8202,
+        "regions": null
+      },
+      {
+        "id": "repair",
+        "label": "Repair",
+        "kind": "proxy",
+        "hulls": 191,
+        "vertices": 4972,
+        "regions": null
+      },
+      {
+        "id": "compress-1",
+        "label": "Compress 1",
+        "kind": "proxy",
+        "hulls": 169,
+        "vertices": 4845,
+        "regions": null
+      },
+      {
+        "id": "compress-2",
+        "label": "Compress 2",
+        "kind": "proxy",
+        "hulls": 156,
+        "vertices": 4756,
+        "regions": null
+      },
+      {
+        "id": "compress-3",
+        "label": "Compress 3",
+        "kind": "proxy",
+        "hulls": 150,
+        "vertices": 4665,
+        "regions": null
+      },
+      {
+        "id": "compress-4",
+        "label": "Compress 4",
+        "kind": "proxy",
+        "hulls": 149,
+        "vertices": 4650,
+        "regions": null
+      },
+      {
+        "id": "compress-5",
+        "label": "Compress 5",
+        "kind": "proxy",
+        "hulls": 148,
+        "vertices": 4639,
+        "regions": null
+      }
+    ]
+  },
+  {
+    "id": "cabinet-1",
+    "name": "Cabinet",
+    "mode": "repair",
+    "steps": [
+      {
+        "id": "initial",
+        "label": "Initial decomposition",
+        "kind": "proxy",
+        "hulls": 28,
+        "vertices": 688,
+        "regions": null
+      },
+      {
+        "id": "repair-1",
+        "label": "Repair \u00b7 iter. 1",
+        "kind": "proxy",
+        "hulls": 75,
+        "vertices": 1688,
+        "regions": null
+      },
+      {
+        "id": "repair-3",
+        "label": "Repair \u00b7 iter. 3",
+        "kind": "proxy",
+        "hulls": 18,
+        "vertices": 504,
+        "regions": null
+      }
+    ]
+  }
+]

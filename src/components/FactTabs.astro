@@ -1,0 +1,40 @@
+---
+interface Props { id: string; labels: string[]; label: string; }
+const { id, labels, label } = Astro.props;
+---
+<fact-tabs class="fact-tabs" data-group={id}>
+  <div class="tab-list" role="tablist" aria-label={label}>
+    {labels.map((name, i) => <button type="button" role="tab" id={`${id}-tab-${i}`} aria-controls={`${id}-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{name}</button>)}
+  </div>
+  <div class="tab-panels"><slot /></div>
+</fact-tabs>
+<noscript><style>fact-tabs .tab-panel[hidden] { display: block; } fact-tabs .tab-list { display: none; }</style></noscript>
+<script>
+  class FactTabs extends HTMLElement {
+    connectedCallback() {
+      const tabs = Array.from(this.querySelectorAll<HTMLButtonElement>(':scope > .tab-list > button'));
+      const panels = Array.from(this.querySelectorAll<HTMLElement>(':scope > .tab-panels > .tab-panel'));
+      const activate = (index: number, focus = false) => {
+        tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === index)); tab.tabIndex = i === index ? 0 : -1; });
+        panels.forEach((panel, i) => {
+          panel.hidden = i !== index;
+          if (i !== index) panel.querySelectorAll('video').forEach(video => video.pause());
+        });
+        if (focus) tabs[index].focus();
+      };
+      tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => activate(i));
+        tab.addEventListener('keydown', (event) => {
+          let next = i;
+          if (event.key === 'ArrowRight') next = (i + 1) % tabs.length;
+          else if (event.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
+          else if (event.key === 'Home') next = 0;
+          else if (event.key === 'End') next = tabs.length - 1;
+          else return;
+          event.preventDefault(); activate(next, true);
+        });
+      });
+    }
+  }
+  if (!customElements.get('fact-tabs')) customElements.define('fact-tabs', FactTabs);
+</script>

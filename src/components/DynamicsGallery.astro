@@ -1,0 +1,90 @@
+---
+import FactTabs from './FactTabs.astro';
+import objects from '../data/dynamics-comparisons.json';
+const base = `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}media/dynamics/`;
+---
+<div class="dynamics-gallery dynamics-comparisons">
+  <FactTabs id="dynamic-objects" label="Real and simulated object motion" labels={objects.map(o=>o.name)}>
+    {objects.map((object,i) => <div id={`dynamic-objects-panel-${i}`} role="tabpanel" aria-labelledby={`dynamic-objects-tab-${i}`} tabindex="0" hidden={i !== 0} class="tab-panel">
+      <dynamics-comparison data-duration={object.duration}>
+        <div class="motion-toolbar">
+          <label for={`speed-${object.id}`}>Playback <select id={`speed-${object.id}`} data-speed-control>{[.25,.5,1].map(speed=><option value={speed} selected={speed===object.speed}>{speed}×</option>)}</select></label>
+        </div>
+        <video data-comparison-video src={`${base}${object.video}`} poster={`${base}${object.poster}`} width={object.width} height={object.height} controls playsinline muted loop preload="none" aria-label={`${object.name}: synchronized ${object.methods.map(method=>method.label).join(', ')}`} />
+        <div class="motion-curve-heading">
+          <div class="motion-legend">{object.methods.map(method=><span style={`color:${method.color}`}><svg viewBox="0 0 24 6" width="24" height="6" aria-hidden="true"><line x1="0" y1="3" x2="24" y2="3" stroke="currentColor" stroke-width="2" stroke-dasharray={method.style==='--'?'6 3':method.style==='-.'?'7 3 1 3':method.style===':'?'1 3':undefined}/></svg>{method.label}</span>)}</div>
+          <output data-time>0.00 s</output>
+        </div>
+        <div class="motion-plot" data-quantity="position" role="slider" tabindex="0" aria-label={`${object.name}: seek using the ${object.id==='drawer'?'displacement':'door angle'} curve`} aria-valuemin="0" aria-valuemax={object.duration} aria-valuenow="0" aria-valuetext="0.00 seconds">
+          <img src={`${base}${object.position}`} width="960" height="340" loading="lazy" alt={`${object.name}: ${object.id==='drawer'?'displacement':'door angle'} trajectories of real observations, FACT, and all six baselines`} />
+          <span class="motion-cursor" aria-hidden="true"></span>
+        </div>
+      </dynamics-comparison>
+    </div>)}
+  </FactTabs>
+</div>
+
+<script>
+  class DynamicsComparison extends HTMLElement {
+    private cleanup?: () => void;
+    connectedCallback() {
+      if (this.cleanup) return;
+      const events = new AbortController();
+      const listen = (target: EventTarget, type: string, handler: EventListener) => target.addEventListener(type, handler, {signal:events.signal});
+      const video = this.querySelector<HTMLVideoElement>('video')!;
+      const speed = this.querySelector<HTMLSelectElement>('[data-speed-control]')!;
+      const plots = [...this.querySelectorAll<HTMLElement>('.motion-plot')];
+      const duration = Number(this.dataset.duration);
+      let pending: number | null = null;
+      let frame: number | undefined;
+      const update = () => {
+        const time = Math.max(0,Math.min(duration, pending ?? video.currentTime ?? 0));
+        const fraction = duration > 0 ? time / duration : 0;
+        for (const plot of plots) {
+          plot.style.setProperty('--cursor', `${8.5 + fraction * 89.5}%`);
+          plot.setAttribute('aria-valuenow', time.toFixed(3));
+          plot.setAttribute('aria-valuetext', `${time.toFixed(2)} seconds`);
+        }
+        this.querySelector<HTMLOutputElement>('[data-time]')!.textContent = `${time.toFixed(2)} s`;
+      };
+      const cancelFrame = () => { if (frame !== undefined) cancelAnimationFrame(frame); frame = undefined; };
+      const tick = () => { update(); if (!video.paused) frame = requestAnimationFrame(tick); };
+      const seek = (time: number) => {
+        const clamped = Math.max(0, Math.min(duration - .001,time));
+        if (video.readyState >= 1) video.currentTime = clamped;
+        else { pending = clamped; video.load(); }
+        update();
+      };
+      listen(video,'loadedmetadata', () => {
+        video.playbackRate=Number(speed.value);
+        if (pending !== null) {
+          const state=pending;pending=null;
+          video.currentTime=Math.min(state,video.duration || duration);
+        }
+        update();
+      });
+      listen(speed,'change',()=>{video.playbackRate=Number(speed.value);});
+      for (const type of ['timeupdate','seeked','ended']) listen(video,type,update);
+      listen(video,'play',()=>{cancelFrame();tick();});
+      listen(video,'pause',()=>{cancelFrame();update();});
+      for (const plot of plots) {
+        listen(plot,'click',(raw)=>{
+          const event=raw as MouseEvent;
+          const bounds=plot.getBoundingClientRect();
+          if (bounds.width) seek(((event.clientX-bounds.left)/bounds.width-.085)/.895*duration);
+        });
+        listen(plot,'keydown',(raw)=>{
+          const event=raw as KeyboardEvent;
+          if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+          event.preventDefault();
+          const current=pending ?? video.currentTime;
+          seek(event.key==='Home'?0:event.key==='End'?duration:current+(event.key==='ArrowRight'?1:-1)/60);
+        });
+      }
+      update();
+      this.cleanup=()=>{events.abort();cancelFrame();video.pause();};
+    }
+    disconnectedCallback() {this.cleanup?.();this.cleanup=undefined;}
+  }
+  if (!customElements.get('dynamics-comparison')) customElements.define('dynamics-comparison',DynamicsComparison);
+</script>

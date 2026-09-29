@@ -1,4 +1,4 @@
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
@@ -13,6 +13,8 @@ import astroExpressiveCode from "astro-expressive-code";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://l-avenir.github.io",
+  base: "/fact-project-page",
   vite: {
     plugins: [tailwindcss()],
   },
@@ -46,14 +48,6 @@ export default defineConfig({
     }),
     mdx(),
     react(),
-  ],
-  fonts: [
-    {
-      provider: fontProviders.google(),
-      name: "Noto Sans",
-      cssVariable: "--font-noto-sans",
-      weights: ["100 900"],
-    },
   ],
   image: {
     responsiveStyles: true,

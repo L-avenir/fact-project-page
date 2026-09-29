@@ -1,0 +1,7 @@
+---
+interface Props { label: string; headers: string[]; rows: (string|number)[][]; }
+const { label,headers,rows } = Astro.props;
+---
+<div class="results-table" role="region" aria-label={label} tabindex="0">
+<table><caption>{label}</caption><thead><tr>{headers.map(h=><th scope="col">{h}</th>)}</tr></thead><tbody>{rows.map(row=><tr class:list={{'ours':String(row[0]).startsWith('FACT')}}>{row.map((cell,i)=>i===0?<th scope="row">{cell}</th>:<td>{cell}</td>)}</tr>)}</tbody></table>
+</div>

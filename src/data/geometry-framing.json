@@ -1,0 +1,218 @@
+{
+  "bakingchamber-input": {
+    "width": 96.5749,
+    "left": 1.7126,
+    "top": 1.7126,
+    "background": "rgb(243 244 246)",
+    "bounds": [
+      129,
+      50,
+      639,
+      718
+    ]
+  },
+  "bakingchamber-fact": {
+    "width": 112.0,
+    "left": -8.5667,
+    "top": -4.1333,
+    "background": "transparent",
+    "bounds": [
+      172,
+      78,
+      581,
+      618
+    ]
+  },
+  "bedsidetable-input": {
+    "width": 96.5749,
+    "left": 1.7126,
+    "top": 1.7126,
+    "background": "rgb(255 255 255)",
+    "bounds": [
+      88,
+      50,
+      680,
+      718
+    ]
+  },
+  "bedsidetable-fact": {
+    "width": 104.0964,
+    "left": -2.2651,
+    "top": -1.253,
+    "background": "transparent",
+    "bounds": [
+      104,
+      64,
+      619,
+      645
+    ]
+  },
+  "cabinet_1-input": {
+    "width": 96.5749,
+    "left": 1.7126,
+    "top": 1.6497,
+    "background": "rgb(255 255 255)",
+    "bounds": [
+      50,
+      119,
+      718,
+      650
+    ]
+  },
+  "cabinet_1-fact": {
+    "width": 101.4765,
+    "left": -0.7383,
+    "top": 0.4597,
+    "background": "transparent",
+    "bounds": [
+      62,
+      123,
+      658,
+      580
+    ]
+  },
+  "drawer_kit_3-input": {
+    "width": 96.5749,
+    "left": 1.7126,
+    "top": 1.7126,
+    "background": "rgb(255 255 255)",
+    "bounds": [
+      50,
+      63,
+      718,
+      705
+    ]
+  },
+  "drawer_kit_3-fact": {
+    "width": 106.4789,
+    "left": -3.2394,
+    "top": -2.6479,
+    "background": "transparent",
+    "bounds": [
+      78,
+      72,
+      642,
+      640
+    ]
+  },
+  "grand_piano-input": {
+    "width": 96.5749,
+    "left": 1.7126,
+    "top": 1.6497,
+    "background": "rgb(255 255 255)",
+    "bounds": [
+      50,
+      112,
+      718,
+      657
+    ]
+  },
+  "grand_piano-fact": {
+    "width": 116.3077,
+    "left": -9.1231,
+    "top": -13.7269,
+    "background": "transparent",
+    "bounds": [
+      106,
+      188,
+      626,
+      601
+    ]
+  },
+  "massage_gun-input": {
+    "width": 96.5749,
+    "left": 1.7126,
+    "top": 1.7126,
+    "background": "rgb(243 244 246)",
+    "bounds": [
+      132,
+      50,
+      636,
+      718
+    ]
+  },
+  "massage_gun-fact": {
+    "width": 129.5075,
+    "left": -17.3619,
+    "top": -7.469,
+    "background": "transparent",
+    "bounds": [
+      217,
+      86,
+      532,
+      553
+    ]
+  },
+  "motor-input": {
+    "width": 96.5749,
+    "left": 1.7126,
+    "top": 1.7126,
+    "background": "rgb(243 244 246)",
+    "bounds": [
+      50,
+      105,
+      718,
+      663
+    ]
+  },
+  "motor-fact": {
+    "width": 126.7925,
+    "left": -19.1195,
+    "top": -7.673,
+    "background": "transparent",
+    "bounds": [
+      154,
+      114,
+      631,
+      541
+    ]
+  },
+  "rolling_washer_5-input": {
+    "width": 96.5749,
+    "left": 1.7126,
+    "top": 1.7126,
+    "background": "rgb(255 255 255)",
+    "bounds": [
+      130,
+      50,
+      638,
+      718
+    ]
+  },
+  "rolling_washer_5-fact": {
+    "width": 110.9725,
+    "left": -6.6422,
+    "top": -3.7138,
+    "background": "transparent",
+    "bounds": [
+      166,
+      76,
+      569,
+      621
+    ]
+  },
+  "washing_machine_2-input": {
+    "width": 96.5749,
+    "left": 1.7126,
+    "top": 1.7126,
+    "background": "rgb(175 175 175)",
+    "bounds": [
+      186,
+      50,
+      582,
+      718
+    ]
+  },
+  "washing_machine_2-fact": {
+    "width": 117.4369,
+    "left": -8.7184,
+    "top": -8.6369,
+    "background": "transparent",
+    "bounds": [
+      207,
+      102,
+      513,
+      617
+    ]
+  }
+}

@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Original user film is preserved locally; public/media/FACT.mp4 is the served copy.
+/FACT.mp4

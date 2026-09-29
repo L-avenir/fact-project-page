@@ -1,0 +1,19 @@
+---
+import { Icon } from 'astro-icon/components';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const paperUrl = ''; // Add the arXiv URL when available.
+---
+<header class="fact-hero">
+  <img class="wordmark" src={`${base}media/fact-logo.svg`} width="442" height="134" alt="FACT" fetchpriority="high" />
+  <h1><span class="sr-only">FACT: </span>Fidelity-Aware Construction<br class="desktop-break" /> of Articulated Twins</h1>
+  <div class="authors">
+    <a href="https://openreview.net/profile?id=~Kuixiang_Shao1" target="_blank" rel="noopener noreferrer">Kuixiang Shao</a>
+    <a href="https://openreview.net/profile?id=~Chuansen_Nie1" target="_blank" rel="noopener noreferrer">Chuansen Nie</a>
+    <a href="https://openreview.net/profile?id=~Yinuo_Bai1" target="_blank" rel="noopener noreferrer">Yinuo Bai</a>
+    <a href="https://jiayuan-gu.github.io/" target="_blank" rel="noopener noreferrer">Jiayuan Gu</a>
+    <a href="https://www.yu-jingyi.com/" target="_blank" rel="noopener noreferrer">Jingyi Yu</a>
+  </div>
+  <p class="affiliation">ShanghaiTech University</p>
+  <div class="resource-links"><a href={paperUrl || undefined} aria-disabled={!paperUrl ? 'true' : undefined} target="_blank" rel="noopener"><Icon name="ri:file-pdf-2-line" />Paper</a><a href="#overview-video"><Icon name="ri:play-circle-line" />Video</a><a href="#method"><Icon name="ri:route-line" />Method</a></div>
+  <p class="hero-summary">From visual observations to articulated twins with<br class="desktop-break" /> <span class="geometry-text">geometry</span>, <span class="contact-text">contact</span>, and <span class="dynamics-text">dynamic fidelity</span>.</p>
+</header>

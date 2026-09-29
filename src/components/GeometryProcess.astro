@@ -1,0 +1,22 @@
+---
+import FactTabs from './FactTabs.astro';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const image = (name: string) => `${base}media/${name}`;
+const features = [
+  {id:'housing',name:'Outer housing',type:'Rounded shell with an opening',plan:'Plan the outer profile, inner rim, height, and drawer opening as editable features.',measure:'Take a horizontal mesh section. Measure the extents and tangencies, then fit the rounded-corner profile.',result:'Extrude the measured profile, form the drawer opening, and construct the rolled rim.',params:[['Width','0.7941'],['Corner radius','0.2184'],['Exponent','1.7985']]},
+  {id:'handle',name:'Drawer handle',type:'Half-superellipse handle loft',plan:'Represent the grip as a curved section loft, with a bent upper arm and rounded transitions.',measure:'Extract the grip cross-section. Measure its width and depth, then fit the transverse curvature.',result:'Loft the fitted sections through the grip and elbow to recover the cantilever handle.',params:[['Width','0.1271'],['Depth','0.0663'],['Exponent','2.6593']]}
+];
+---
+<div class="process-block geometry-process">
+  <div class="process-intro"><span class="eyebrow">Inside the reconstruction</span><h3>From a feature plan to measured geometry</h3><p>A baking chamber, reconstructed through part-specific features and targeted measurements.</p></div>
+  <FactTabs id="geometry-features" label="Explore a geometric feature" labels={features.map(f=>f.name)}>
+    {features.map((feature, i) => <div id={`geometry-features-panel-${i}`} role="tabpanel" aria-labelledby={`geometry-features-tab-${i}`} tabindex="0" hidden={i !== 0} class="tab-panel">
+      <div class="process-grid">
+        <div class="process-step"><h4><span>01</span> Feature plan</h4><img src={image(`geometry-input-${feature.id}.png`)} width="720" height="720" loading="lazy" alt={`Complete baking chamber input with the ${feature.name.toLowerCase()} highlighted`} /><strong>{feature.type}</strong><p>{feature.plan}</p></div>
+        <div class="process-step"><h4><span>02</span> Targeted measurement</h4><img src={image(`${feature.id}-measurement.svg`)} width="500" height="430" loading="lazy" alt={`${feature.name} mesh-section points overlaid with the measured analytic profile`} /><div class="parameter-list">{feature.params.map(([key,value])=><div><span>{key}</span><b>{value}</b></div>)}</div><p>{feature.measure}</p></div>
+        <div class="process-step"><h4><span>03</span> Reconstructed feature</h4><img src={image(`geometry-${feature.id}.png`)} width="1000" height="850" loading="lazy" alt={`Final ${feature.name.toLowerCase()} generated from the fitted parameters`} /><strong>Measured parameters → editable geometry</strong><p>{feature.result}</p></div>
+      </div>
+    </div>)}
+  </FactTabs>
+  <div class="process-outcome"><img src={image('geometry-exploded.png')} width="1000" height="850" loading="lazy" alt="Exploded view of the reconstructed baking chamber, showing the lid, housing, basket, and handle" /><div><span class="eyebrow">Exploded reconstruction</span><h4>Features remain editable. Parts remain connected.</h4><p>Measured profiles and feature parameters generate the complete object. Geometric and visual diagnostics guide remeasurement, replanning, and program correction.</p><div class="feature-key"><span><i style="background:#427e9c"></i>Housing</span><span><i style="background:#2e8f87"></i>Basket & fascia</span><span><i style="background:#b48748"></i>Handle</span></div></div></div>
+</div>
