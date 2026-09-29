@@ -1,23 +1,28 @@
-# FACT project page
+<div align="center">
 
-Website: https://l-avenir.github.io/fact-project-page/
+# FACT: Fidelity-Aware Construction of Articulated Twins
 
-## Develop and deploy
+[Kuixiang Shao](https://openreview.net/profile?id=~Kuixiang_Shao1) · [Chuansen Nie](https://openreview.net/profile?id=~Chuansen_Nie1) · [Yinuo Bai](https://openreview.net/profile?id=~Yinuo_Bai1) · [Jiayuan Gu](https://jiayuan-gu.github.io/) · [Jingyi Yu](https://www.yu-jingyi.com/)
 
-```sh
-npm ci
-npm run dev
-npm run build
+**ShanghaiTech University**
+
+[![Project Page](https://img.shields.io/badge/Project-Page-193845?style=for-the-badge)](https://l-avenir.github.io/fact-project-page/)
+![arXiv — coming soon](https://img.shields.io/badge/arXiv-coming%20soon-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white)
+
+https://l-avenir.github.io/fact-project-page/
+
+</div>
+
+FACT is an agentic framework that progressively constructs articulated twins with **geometry, contact, and dynamic fidelity**. It reconstructs editable articulated geometry from images, refines collision proxies for reliable interaction, and calibrates physical response models from passive-motion videos.
+
+[![FACT teaser: geometry reconstruction, contact refinement, and dynamic calibration](src/assets/fact/teaser.png)](https://l-avenir.github.io/fact-project-page/)
+
+## BibTeX
+
+```bibtex
+% BibTeX entry will be added soon.
 ```
 
-Preview: http://localhost:4321/fact-project-page/
+---
 
-Push to `main` to deploy through `.github/workflows/astro.yml`.
-Page content is in `src/paper.mdx`; web assets are in `src/assets/` and `public/media/`.
-Only website source, configuration, and published media belong in this repository.
-New media must be deliberately added with `git add -f public/media/<filename>`.
-
-## Template attribution
-
-Adapted from [Roman Hauksson-Neill’s project page template](https://research-template.roman.technology), originally based on [Eliahu Horwitz’s template](https://github.com/eliahuhorwitz/Academic-project-page-template) and [Nerfies](https://nerfies.github.io/).
-Template licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Research content and media are separate from the template license.
+Website adapted from [Roman Hauksson-Neill’s project page template](https://research-template.roman.technology), based on [Eliahu Horwitz’s template](https://github.com/eliahuhorwitz/Academic-project-page-template) and [Nerfies](https://nerfies.github.io/). Template licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); research content and media are separate from the template license.
