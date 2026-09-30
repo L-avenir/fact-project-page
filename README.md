@@ -7,7 +7,7 @@
 **ShanghaiTech University**
 
 [![Project Page](https://img.shields.io/badge/Project-Page-193845?style=for-the-badge)](https://l-avenir.github.io/fact-project-page/)
-![arXiv — coming soon](https://img.shields.io/badge/arXiv-coming%20soon-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white)
+[![arXiv](https://img.shields.io/badge/arXiv-2609.37067-b31b1b?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2609.37067)
 
 https://l-avenir.github.io/fact-project-page/
 
@@ -20,7 +20,15 @@ FACT is an agentic framework that progressively constructs articulated twins wit
 ## BibTeX
 
 ```bibtex
-% BibTeX entry will be added soon.
+@misc{shao2026factfidelityawareconstructionarticulated,
+  title={FACT: Fidelity-Aware Construction of Articulated Twins},
+  author={Kuixiang Shao and Chuansen Nie and Yinuo Bai and Jiayuan Gu and Jingyi Yu},
+  year={2026},
+  eprint={2609.37067},
+  archivePrefix={arXiv},
+  primaryClass={cs.RO},
+  url={https://arxiv.org/abs/2609.37067},
+}
 ```
 
 ---

@@ -108,7 +108,7 @@ html{scroll-behavior:smooth;scroll-padding-top:32px}
 .motion-plot img{display:block;width:100%;height:auto}.motion-cursor{position:absolute;top:5%;bottom:20%;left:var(--cursor);width:1px;background:#19384580;pointer-events:none}.motion-cursor:before{content:'';position:absolute;top:-2px;left:-3px;width:7px;height:7px;border-radius:50%;background:var(--ink)}
 @media(max-width:600px){.dynamics-comparisons{padding:0 10px 14px}.motion-toolbar{align-items:flex-start;gap:10px;padding:0;margin-bottom:18px}.motion-toolbar label{font-size:11px;display:grid;gap:4px}.motion-toolbar select{padding:7px 22px 7px 8px;max-width:190px;font-size:12px}.motion-curve-heading{margin:18px 2px 10px;font-size:11px;gap:5px}.motion-legend{gap:8px}.motion-legend span{gap:4px}}
 
-.bibtex-placeholder{margin:20px 0 0;padding:22px 24px;background:var(--surface);border:1px solid var(--line);border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--muted);font-size:14px;line-height:1.7}
+.bibtex-entry{margin:20px 0 0;padding:22px 24px;background:var(--surface);border:1px solid var(--line);border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--muted);font-size:14px;line-height:1.7}
 
 image-state{display:flow-root;position:relative;min-width:0}
 image-state .image-status{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border-radius:8px;background:var(--surface);color:var(--muted);font-size:13px;line-height:1.4;text-align:center;padding:10px;z-index:2}

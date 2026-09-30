@@ -2,7 +2,7 @@
 import ImageState from './ImageState.astro';
 import { Icon } from 'astro-icon/components';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-const paperUrl = ''; // Add the arXiv URL when available.
+const paperUrl = 'https://arxiv.org/abs/2609.37067';
 ---
 <header class="fact-hero">
   <ImageState class="wordmark-frame"><img class="wordmark" src={`${base}media/fact-logo.svg`} width="442" height="134" alt="FACT" fetchpriority="high" /></ImageState>
@@ -15,6 +15,6 @@ const paperUrl = ''; // Add the arXiv URL when available.
     <a href="https://www.yu-jingyi.com/" target="_blank" rel="noopener noreferrer">Jingyi Yu</a>
   </div>
   <p class="affiliation">ShanghaiTech University</p>
-  <div class="resource-links"><a href={paperUrl || undefined} aria-disabled={!paperUrl ? 'true' : undefined} target="_blank" rel="noopener"><Icon name="ri:file-pdf-2-line" />Paper</a><a href="#overview-video"><Icon name="ri:play-circle-line" />Video</a><a href="#method"><Icon name="ri:route-line" />Method</a></div>
+  <div class="resource-links"><a href={paperUrl} target="_blank" rel="noopener noreferrer"><Icon name="ri:file-pdf-2-line" />Paper</a><a href="#overview-video"><Icon name="ri:play-circle-line" />Video</a><a href="#method"><Icon name="ri:route-line" />Method</a></div>
   <p class="hero-summary">From visual observations to articulated twins with<br class="desktop-break" /> <span class="geometry-text">geometry</span>, <span class="contact-text">contact</span>, and <span class="dynamics-text">dynamic fidelity</span>.</p>
 </header>
