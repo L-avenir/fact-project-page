@@ -77,7 +77,7 @@
       },
       {
         "id": "repair-1",
-        "label": "Repair \u00b7 iter. 1",
+        "label": "Repair",
         "kind": "proxy",
         "hulls": 75,
         "vertices": 1688,
@@ -85,7 +85,7 @@
       },
       {
         "id": "repair-3",
-        "label": "Repair \u00b7 iter. 3",
+        "label": "Compress",
         "kind": "proxy",
         "hulls": 18,
         "vertices": 504,
