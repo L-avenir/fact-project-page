@@ -4,7 +4,7 @@ const { class: className } = Astro.props;
 ---
 <image-state class={className} data-state="loading" aria-busy="true">
   <slot />
-  <div class="image-status" role="status">
+  <div class="image-status" role="status" data-nosnippet>
     <span class="image-loading-mark" aria-hidden="true"></span>
     <span data-image-message>Loading image…</span>
     <button type="button" data-image-retry hidden>Retry</button>
