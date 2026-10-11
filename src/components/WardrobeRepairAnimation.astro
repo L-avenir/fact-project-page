@@ -1,0 +1,43 @@
+---
+import geometry from '../data/wardrobe-repair-animation.json';
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const steps = ['Find the collision', 'Inspect the overlap', 'Plan the repair', 'Split the frame', 'Reassemble', 'Check clearance'];
+---
+<wardrobe-repair-animation id="wardrobe-repair" data-phase="0" data-scene={`${base}media/wardrobe-repair-scene.json`} class="repair-replay">
+  <header class="replay-heading"><div><span class="eyebrow">A local repair, in motion</span><h4>From a collision to a repaired object.</h4></div><button type="button" data-play aria-label="Pause repair animation">Pause</button></header>
+  <div class="replay-steps" role="group" aria-label="Repair animation steps">
+    {steps.map((step, i) => <button type="button" data-phase-button={i} aria-pressed={i === 0 ? 'true' : 'false'}><span>0{i+1}</span>{step}</button>)}
+  </div>
+  <div class="replay-stage">
+    <div class="three-scene" data-canvas role="img" aria-label="Continuous 3D animation: inspect the full wardrobe, highlight the frame and right door, zoom into their collision, split the source frame, reassemble the collision proxy, and check clearance."></div>
+    <div class="scene-loading" data-loading>Loading the wardrobe…</div>
+    <svg class="detail-scene" data-detail viewBox="0 0 600 380" role="img" aria-label="Magnified measured cross-section of the frame and right door at the same collision location before and after repair.">
+      <defs><clipPath id="repair-section-clip"><rect x="30" y="20" width="370" height="270" rx="4"/></clipPath></defs>
+      <g transform="translate(85,15)">
+        <g clip-path="url(#repair-section-clip)">
+          <path d={geometry.section.door} fill="#b9cbd5" stroke="#618598" stroke-width="2"/>
+          <g data-before-section><path d={geometry.section.before} fill="#e4c5bd" stroke="#b46a5e" stroke-width="2"/><path d={geometry.section.collision} fill="#cf443b" stroke="#cf443b" stroke-width="3"/></g>
+          <path data-after-section d={geometry.section.after} fill="#b1dcd3" stroke="#298d83" stroke-width="2" opacity="0"/>
+          <path d={geometry.section.source} fill="none" stroke="#485d65" stroke-width="1.3" stroke-dasharray="5 4"/>
+        </g>
+        <g data-collision-label><path d="M205,172 L303,69" stroke="#c74a42" stroke-width="1.5"/><circle cx="205" cy="172" r="8" fill="none" stroke="#c74a42" stroke-width="2"/><text x="307" y="56" text-anchor="middle" fill="#bd4940">Collision</text></g>
+        <text x="90" y="49" fill="#466878">Right door</text><text x="344" y="261" text-anchor="middle" fill="#74645b">Frame</text>
+        <text x="215" y="326" text-anchor="middle" fill="#758992">Dashed outline: source geometry</text>
+      </g>
+    </svg>
+    <div class="scene-cover" data-scene-cover aria-hidden="true"></div>
+    <div class="scene-note" data-note><span class="note-dot"></span><span data-note-text>Full wardrobe · before the local frame repair</span></div>
+    <div class="scene-progress"><span data-progress></span></div>
+  </div>
+</wardrobe-repair-animation>
+<script>
+  import '../scripts/wardrobe-repair.js';
+</script>
+<style>
+  .repair-replay{display:block;margin:32px 28px 0;padding:28px 0 8px;border-top:1px solid var(--line);color:#193845}
+  .replay-heading{display:flex;justify-content:space-between;gap:18px;align-items:center}.replay-heading .eyebrow{font-size:10px;color:#2c9288}.replay-heading h4{font-size:18px;line-height:1.4;margin:6px 0 0}.replay-heading button{border:1px solid var(--line);border-radius:5px;padding:7px 14px;color:#287e77;background:white;font-size:12px;cursor:pointer;min-width:64px}
+  .replay-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:24px 0 16px}.replay-steps button{border:0;border-bottom:2px solid #e3ebed;padding:8px 0 12px;text-align:left;background:none;color:#778994;font-size:11px;line-height:1.5;cursor:pointer}.replay-steps button span{display:block;margin-bottom:3px;font-size:10px}.replay-steps button[aria-pressed=true]{color:#247f77;font-weight:600;border-color:#298d83}
+  .replay-stage{height:480px;position:relative;border-radius:8px;background:#f2f6f7;overflow:hidden}.three-scene{position:absolute;inset:0}.three-scene :global(canvas){width:100%;height:100%;display:block}.scene-loading{position:absolute;inset:0;display:grid;place-items:center;background:#f2f6f7;font-size:13px;color:#718791;z-index:4}.scene-loading[hidden]{display:none}.detail-scene{position:absolute;inset:0;width:100%;height:100%;box-sizing:border-box;padding:48px 0 43px;visibility:hidden;z-index:1;pointer-events:none;background:#f2f6f7}.detail-scene text{font-family:inherit;font-size:12px}.scene-cover{position:absolute;inset:0;background:#f2f6f7;opacity:0;z-index:2;pointer-events:none}.scene-note{z-index:3;position:absolute;bottom:20px;left:22px;right:22px;display:flex;justify-content:flex-start;align-items:baseline;gap:10px;font-size:16px;line-height:1.6;color:#496571}.note-dot{height:6px;width:6px;border-radius:50%;background:#8da4aa;flex-shrink:0}[data-phase="1"] .note-dot{background:#c74a42}[data-phase="5"] .note-dot{background:#298d83}.scene-progress{z-index:3;position:absolute;bottom:0;left:0;right:0;height:3px;background:#e3ebed}.scene-progress span{display:block;height:100%;background:#298d83;width:0}
+  button:focus-visible{outline:2px solid #2c9288;outline-offset:4px}
+  @media(max-width:640px){.repair-replay{margin:24px 16px 0;padding-top:22px}.replay-heading h4{font-size:16px}.replay-steps{grid-template-columns:repeat(3,1fr);gap:5px 12px;margin-top:16px}.replay-steps button{font-size:10px;padding:6px 0}.replay-steps button span{display:inline;margin-right:5px}.replay-stage{height:390px}.scene-note{font-size:15px;line-height:1.5;bottom:16px;left:16px;right:16px}.detail-scene{padding:64px 0 50px}}
+</style>
