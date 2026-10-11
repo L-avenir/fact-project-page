@@ -94,7 +94,7 @@ FACT achieves **99.47%** interaction success, compared with 42.28% for DiagSearc
 <section id="dynamics" className="fidelity-section dynamics-section">
 <div className="section-intro"><span className="stage-label dynamics-text">03 / Dynamic fidelity</span><h2>Reproduce how real objects move.</h2></div>
 
-From passive-response videos, the agent constructs response models and uses simulation residuals to guide model revision and constrained physical parameter fitting. The reconstructed geometry, joints, and collision proxies provide a fixed basis for calibration.
+The agent <strong className="dynamics-text">constructs and revises response models</strong> from passive-response videos. <strong className="dynamics-text">Simulation residuals guide model revision</strong> and the choice of parameters to fit, while numerical tools perform <strong className="dynamics-text">constrained parameter fitting</strong>. Geometry, joints, and collision proxies remain fixed during calibration.
 
 <Wide><DynamicsGallery /></Wide>
 
